@@ -24,4 +24,5 @@ func (parser *ParserImageCommand) Parse(result string) []dto.ImageDto {
 		images[i].ID = strings.TrimPrefix(images[i].ID, "sha256:")
 	}
 	return images
+
 }
