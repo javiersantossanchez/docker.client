@@ -1,21 +1,23 @@
-package main
+package com
 
 import (
 	"io/ioutil"
 	"log"
+
+	"jdss.docker.client/docker"
 )
 
 /*
 ContainerDto used to parse result
 */
 type ListContainerCommand struct {
-	docker DockerConnector
+	Docker docker.DockerConnector
 }
 
-func (command *ListContainerCommand) execute() string {
-	httpConnector := command.docker.GetConnector()
+func (command *ListContainerCommand) Execute() string {
+	httpConnector := command.Docker.GetConnector()
 
-	resp, err := httpConnector.Get(command.docker.baseUrl() + "/containers/json")
+	resp, err := httpConnector.Get(command.Docker.BaseUrl() + "/containers/json")
 	if err != nil {
 		log.Fatal(err)
 	}

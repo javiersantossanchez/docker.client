@@ -1,4 +1,4 @@
-package main
+package docker
 
 import (
 	"net/http"
@@ -17,7 +17,7 @@ func (docker *DockerConnector) socketPath() string {
 	return "/var/run/docker.sock"
 }
 
-func (docker *DockerConnector) baseUrl() string {
+func (docker *DockerConnector) BaseUrl() string {
 	return "http+unix://myservice//v1.23"
 }
 

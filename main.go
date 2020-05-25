@@ -4,18 +4,21 @@ import (
 	"fyne.io/fyne"
 	"fyne.io/fyne/app"
 	"fyne.io/fyne/widget"
+	"jdss.docker.client/docker"
+	"jdss.docker.client/docker/com"
+	"jdss.docker.client/docker/parser"
 )
 
 func main() {
 
-	imageCommand := ListImagesCommand{docker: DockerConnector{}}
-	imageResult := imageCommand.execute()
-	parserImage := ParserImageCommand{}
+	imageCommand := com.ListImagesCommand{Docker: docker.DockerConnector{}}
+	imageResult := imageCommand.Execute()
+	parserImage := parser.ParserImageCommand{}
 	images := parserImage.Parse(imageResult)
 
-	containerCommand := ListContainerCommand{docker: DockerConnector{}}
-	containerResult := containerCommand.execute()
-	parse := ParserContainerCommand{}
+	containerCommand := com.ListContainerCommand{Docker: docker.DockerConnector{}}
+	containerResult := containerCommand.Execute()
+	parse := parser.ParserContainerCommand{}
 	bird := parse.Parse(containerResult)
 
 	app := app.New()

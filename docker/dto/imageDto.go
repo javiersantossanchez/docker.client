@@ -1,4 +1,4 @@
-package main
+package dto
 
 /*
 ContainerDto used to parse result
