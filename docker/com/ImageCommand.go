@@ -10,11 +10,14 @@ import (
 /*
 ContainerDto used to parse result
 */
-type ListImagesCommand struct {
+type ImageCommand struct {
 	Docker docker.DockerConnector
 }
 
-func (command *ListImagesCommand) Execute() string {
+/*
+sdadasdads
+*/
+func (command *ImageCommand) Execute() string {
 	httpConnector := command.Docker.GetConnector()
 
 	resp, err := httpConnector.Get(command.Docker.BaseUrl() + "/images/json")

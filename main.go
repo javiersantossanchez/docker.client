@@ -1,6 +1,9 @@
 package main
 
 import (
+	"log"
+	"strconv"
+
 	"fyne.io/fyne"
 	"fyne.io/fyne/app"
 	"fyne.io/fyne/widget"
@@ -11,7 +14,7 @@ import (
 
 func main() {
 
-	imageCommand := com.ListImagesCommand{Docker: docker.DockerConnector{}}
+	imageCommand := com.ImageCommand{Docker: docker.DockerConnector{}}
 	imageResult := imageCommand.Execute()
 	parserImage := parser.ParserImageCommand{}
 	images := parserImage.Parse(imageResult)
@@ -22,25 +25,39 @@ func main() {
 	bird := parse.Parse(containerResult)
 
 	app := app.New()
+	w := app.NewWindow("Hello")
 
-	sizeImage := len(images)
-	var dddImages = make([]fyne.CanvasObject, sizeImage)
+	rt := widget.NewVBox()
 
-	indexImages := 0
 	for _, container := range images {
-		dddImages[indexImages] = widget.NewLabel(container.ID + "......")
-		indexImages++
-	}
+		imageIDLabel := widget.NewLabel(container.ID)
+		imageSizelabel := widget.NewLabel(strconv.Itoa(container.Size))
+		idValue := container.ID
+		onClick := func() {
 
-	rt := widget.NewGroup(
-		"Images",
-		dddImages...,
-	)
+			container := widget.NewVBox()
+			container.Append(widget.NewLabel(idValue))
+			//widget
+
+			as := widget.NewModalPopUp(container, w.Canvas())
+			container.Append(widget.NewButton("asas", func() {
+				log.Println("tapped" + idValue)
+				as.Hide()
+			}))
+
+		}
+
+		viewDetailButton := widget.NewButton("View Detail", onClick)
+
+		rt.Append(widget.NewHBox(imageIDLabel, imageSizelabel, viewDetailButton))
+	}
 
 	dockerImages := widget.NewVScrollContainer(
 		rt,
 	)
 	dockerImages.SetMinSize(fyne.Size{Height: 120, Width: 580})
+
+	imageListTab := widget.NewTabItem("Images List", dockerImages)
 
 	size := len(bird)
 
@@ -57,12 +74,15 @@ func main() {
 		ddd...,
 	)
 
-	w := app.NewWindow("Hello")
+	containerListTab := widget.NewTabItem("Container List", dockerContainers)
+
+	tabs := widget.NewTabContainer(
+		containerListTab,
+		imageListTab,
+	)
 
 	w.SetContent(widget.NewVBox(
-		widget.NewLabel("Hello Fyne!"),
-		dockerImages,
-		dockerContainers,
+		tabs,
 		widget.NewButton("Quit", func() {
 			app.Quit()
 		}),
