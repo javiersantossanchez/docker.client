@@ -9,4 +9,6 @@ type ContainerDto struct {
 	Image string
 
 	State string
+
+	Names []string
 }

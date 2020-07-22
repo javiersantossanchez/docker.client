@@ -10,19 +10,14 @@ import (
 /*
 ContainerDto used to parse result
 */
-type ImageCommand struct {
+type ListContainerByImageCommand struct {
 	Docker  docker.DockerConnector
 	Context map[string]string
 }
 
-/*
-sdadasdads
-*/
-func (command *ImageCommand) Execute() string {
-
+func (command *ListContainerByImageCommand) Execute() string {
 	httpConnector := command.Docker.GetConnector()
-
-	resp, err := httpConnector.Get(command.Docker.BaseUrl() + "/images/" + command.Context["imageID"] + "/json")
+	resp, err := httpConnector.Get(command.Docker.BaseUrl() + "/containers/json?filters={\"ancestor\":[\"" + command.Context["imageID"] + "\"]}")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -32,9 +27,7 @@ func (command *ImageCommand) Execute() string {
 	}
 
 	responseString := string(responseData)
-
 	resp.Body.Close()
-
 	return responseString
 
 }
