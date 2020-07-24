@@ -2,6 +2,7 @@ package ui
 
 import (
 	"fyne.io/fyne"
+	"fyne.io/fyne/layout"
 	"fyne.io/fyne/widget"
 	"jdss.docker.client/docker"
 	"jdss.docker.client/docker/com"
@@ -14,22 +15,21 @@ func GetContainerTab() *widget.TabItem {
 	parse := parser.ParserContainerCommand{}
 	containers := parse.Parse(containerResult)
 
-	rt := widget.NewVBox()
+	containerID := fyne.NewContainerWithLayout(layout.NewVBoxLayout(), widget.NewLabel("Container ID"), layout.NewSpacer())
+
+	containerImage := fyne.NewContainerWithLayout(layout.NewVBoxLayout(), widget.NewLabel("Container Image"), layout.NewSpacer())
+
 	for _, container := range containers {
 
-		containerIDLabel := widget.NewLabel(container.ID)
-		imagelabel := widget.NewLabel(container.Image)
+		containerID.AddObject(widget.NewLabel(container.ID))
+		containerImage.AddObject(widget.NewLabel(container.Image))
 
-		rt.Append(widget.NewHBox(containerIDLabel, imagelabel))
 	}
-	dockerContainers := widget.NewVScrollContainer(
-		rt,
-	)
+	c := fyne.NewContainerWithLayout(layout.NewHBoxLayout(), containerID, layout.NewSpacer(), containerImage)
 
-	dockerContainers.SetMinSize(fyne.Size{Height: 120, Width: 580})
-
-	containerListTab := widget.NewTabItem("Images List", dockerContainers)
-
-	return containerListTab
+	dockerImages := widget.NewVScrollContainer(c)
+	dockerImages.SetMinSize(fyne.Size{Height: 320, Width: 580})
+	imageListTab := widget.NewTabItem("Container List", dockerImages)
+	return imageListTab
 
 }

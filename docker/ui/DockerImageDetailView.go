@@ -13,20 +13,33 @@ import (
 Hello test
 **/
 func GetImageDetailView(image dto.ImageDetailDto, containers []dto.ContainerDto) *fyne.Container {
-	container := fyne.NewContainerWithLayout(layout.NewFormLayout(),
+
+	mainContainer := fyne.NewContainerWithLayout(layout.NewVBoxLayout())
+
+	formContainer := fyne.NewContainerWithLayout(layout.NewFormLayout(),
 		widget.NewLabel("Image ID"), widget.NewLabel(image.ID),
 		widget.NewLabel("Image size"), widget.NewLabel(strconv.Itoa(image.Size)),
 		widget.NewLabel("Author"), widget.NewLabel(image.Author),
 	)
+	mainContainer.AddObject(formContainer)
+	mainContainer.AddObject(widget.NewLabel("Container"))
 
-	container.AddObject(widget.NewLabel("Container"))
-	container.AddObject(widget.NewLabel(""))
-	for _, curent := range containers {
+	containerName := fyne.NewContainerWithLayout(layout.NewVBoxLayout())
+	containerStatus := fyne.NewContainerWithLayout(layout.NewVBoxLayout())
 
-		container.AddObject(widget.NewLabel(curent.Names[0]))
-		container.AddObject(widget.NewLabel(curent.State))
+	if containers == nil || len(containers) > 0 {
+		for _, curent := range containers {
+			containerName.AddObject(widget.NewLabel(curent.Names[0]))
+			containerStatus.AddObject(widget.NewLabel(curent.State))
+
+		}
+
+		cont := fyne.NewContainerWithLayout(layout.NewHBoxLayout(), containerName, containerStatus)
+		scrollContainer := widget.NewVScrollContainer(cont)
+		scrollContainer.SetMinSize(fyne.Size{Height: 120, Width: 580})
+		mainContainer.AddObject(scrollContainer)
 	}
 
-	return container
+	return mainContainer
 
 }

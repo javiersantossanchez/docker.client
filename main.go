@@ -26,19 +26,16 @@ func main() {
 			value := xxx.Execute()
 			par := parser.ParserContainerCommand{}
 			result := par.Parse(value)
-			println(result[0].State)
 
 			container := widget.NewVBox()
 			container.Append(ui.GetImageDetailView(image, result))
-			//widget
 
 			as := widget.NewModalPopUp(container, w.Canvas())
 			container.Append(widget.NewButton("asas", func() {
-				// 	log.Println("tapped" + idValue)
 				as.Hide()
 			}))
 		}),
-		//ui.GetContainerTab(),
+		ui.GetContainerTab(),
 	)
 
 	// content := widget.NewVBox(
