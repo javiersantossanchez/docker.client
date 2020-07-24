@@ -32,7 +32,6 @@ func (command *ImageCommand) Execute() string {
 	}
 
 	responseString := string(responseData)
-
 	resp.Body.Close()
 
 	return responseString

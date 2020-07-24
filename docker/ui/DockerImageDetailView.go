@@ -40,6 +40,18 @@ func GetImageDetailView(image dto.ImageDetailDto, containers []dto.ContainerDto)
 		mainContainer.AddObject(scrollContainer)
 	}
 
+	mainContainer.AddObject(widget.NewLabel("Layers"))
+	containerLayers := fyne.NewContainerWithLayout(layout.NewVBoxLayout())
+	if image.Layers == nil || len(image.Layers) > 0 {
+		for _, layer := range image.Layers {
+			containerLayers.AddObject(widget.NewLabel(layer))
+		}
+		cont := fyne.NewContainerWithLayout(layout.NewHBoxLayout(), containerLayers)
+		scrollContainer := widget.NewVScrollContainer(cont)
+		scrollContainer.SetMinSize(fyne.Size{Height: 220, Width: 580})
+		mainContainer.AddObject(scrollContainer)
+	}
+
 	return mainContainer
 
 }

@@ -17,4 +17,13 @@ type ImageDetailDto struct {
 	Repository string
 
 	Author string
+
+	RootFS RootFS
+
+	Layers []string
+}
+
+type RootFS struct {
+	Type   string
+	Layers []string
 }

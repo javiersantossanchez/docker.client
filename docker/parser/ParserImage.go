@@ -21,6 +21,7 @@ func (parser *ParserImageCommand) Parse(result string) dto.ImageDetailDto {
 	json.Unmarshal([]byte(result), &image)
 
 	image.ID = strings.TrimPrefix(image.ID, "sha256:")
+	image.Layers = image.RootFS.Layers
 	return image
 
 }
