@@ -11,9 +11,7 @@ import (
 	"jdss.docker.client/docker/parser"
 )
 
-/**
-Hello test
-**/
+// GetImageTab Hello test
 func GetImageTab(viewDetailCallback func(id string)) *widget.TabItem {
 	imageCommand := com.ListImagesCommand{Docker: docker.DockerConnector{}}
 	imageResult := imageCommand.Execute()

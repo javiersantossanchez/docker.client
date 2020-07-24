@@ -9,6 +9,7 @@ import (
 	"jdss.docker.client/docker/parser"
 )
 
+//GetContainerTab test
 func GetContainerTab() *widget.TabItem {
 	containerCommand := com.ListContainerCommand{Docker: docker.DockerConnector{}}
 	containerResult := containerCommand.Execute()

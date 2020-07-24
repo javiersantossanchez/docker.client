@@ -9,9 +9,7 @@ import (
 	"jdss.docker.client/docker/dto"
 )
 
-/**
-Hello test
-**/
+// GetImageDetailView d
 func GetImageDetailView(image dto.ImageDetailDto, containers []dto.ContainerDto) *fyne.Container {
 
 	mainContainer := fyne.NewContainerWithLayout(layout.NewVBoxLayout())
