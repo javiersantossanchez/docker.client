@@ -15,7 +15,6 @@ import (
 func GetImageTab(viewDetailCallback func(id string)) *widget.TabItem {
 	imageCommand := com.ListImagesCommand{Docker: docker.DockerConnector{}}
 	imageResult := imageCommand.Execute()
-	print(imageResult)
 	parserImages := parser.ParserImagesCommand{}
 	images := parserImages.Parse(imageResult)
 
@@ -52,7 +51,7 @@ func GetImageTab(viewDetailCallback func(id string)) *widget.TabItem {
 		containerID, layout.NewSpacer(), containerSize, layout.NewSpacer(), containerDetail)
 
 	dockerImages := widget.NewVScrollContainer(c)
-	dockerImages.SetMinSize(fyne.Size{Height: 420, Width: 580})
+	dockerImages.SetMinSize(fyne.Size{Height: 620, Width: 580})
 	imageListTab := widget.NewTabItem("Images List", dockerImages)
 	return imageListTab
 }

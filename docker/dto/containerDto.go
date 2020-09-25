@@ -11,4 +11,6 @@ type ContainerDto struct {
 	State string
 
 	Names []string
+
+	Status string
 }
