@@ -7,4 +7,6 @@ type ImageDto struct {
 	ID string
 
 	Size int
+
+	RepoTags []string
 }

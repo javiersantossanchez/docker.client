@@ -15,6 +15,7 @@ func GetImageDetailView(image dto.ImageDetailDto, containers []dto.ContainerDto)
 	mainContainer := fyne.NewContainerWithLayout(layout.NewVBoxLayout())
 
 	formContainer := fyne.NewContainerWithLayout(layout.NewFormLayout(),
+		widget.NewLabel("Image Tag"), widget.NewLabel(image.RepoTags[0]),
 		widget.NewLabel("Image ID"), widget.NewLabel(image.ID),
 		widget.NewLabel("Image size"), widget.NewLabel(strconv.Itoa(image.Size)),
 		widget.NewLabel("Author"), widget.NewLabel(image.Author),

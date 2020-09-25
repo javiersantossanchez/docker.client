@@ -12,26 +12,25 @@ import (
 func main() {
 
 	app := app.New()
-	w := app.NewWindow("Hello")
+	w := app.NewWindow("Docker Manager")
 
 	tab := widget.NewTabContainer(
 		ui.GetImageTab(func(id string) {
-
 			imageCommand := com.ImageCommand{Docker: docker.DockerConnector{}, Context: map[string]string{"imageID": id}}
 			imageResult := imageCommand.Execute()
 			parserImage := parser.ParserImageCommand{}
 			image := parserImage.Parse(imageResult)
 
-			xxx := com.ListContainerByImageCommand{Docker: docker.DockerConnector{}, Context: map[string]string{"imageID": id}}
-			value := xxx.Execute()
-			par := parser.ParserContainerCommand{}
-			result := par.Parse(value)
+			containerCommand := com.ListContainerByImageCommand{Docker: docker.DockerConnector{}, Context: map[string]string{"imageID": id}}
+			value := containerCommand.Execute()
+			parserContainer := parser.ParserContainerCommand{}
+			containerInfo := parserContainer.Parse(value)
 
 			container := widget.NewVBox()
-			container.Append(ui.GetImageDetailView(image, result))
+			container.Append(ui.GetImageDetailView(image, containerInfo))
 
 			as := widget.NewModalPopUp(container, w.Canvas())
-			container.Append(widget.NewButton("asas", func() {
+			container.Append(widget.NewButton("Close", func() {
 				as.Hide()
 			}))
 		}),
